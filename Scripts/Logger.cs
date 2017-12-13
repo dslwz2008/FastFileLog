@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.IO;
 
@@ -54,7 +55,7 @@ namespace FastFileLog {
         public void Save() {
             if (debug && printToFile) {
                 string filePath = GetFileFullPath(name);
-                fileWriter = File.Open(filePath, FileMode.Append);
+                fileWriter = File.Open(filePath, FileMode.Create);
                 data.WriteTo(fileWriter);
                 fileWriter.Close();
             }            
@@ -69,7 +70,14 @@ namespace FastFileLog {
         }
 
         protected virtual string GetFileFullPath(string name) {
-            return Application.streamingAssetsPath + "/" + LogManager.Instance.savePath + "/" + name;
+            if (LogManager.Instance.subFolder.Equals(String.Empty))
+            {
+                return Application.streamingAssetsPath + "/" + name;
+            }
+            else
+            {
+                return Application.streamingAssetsPath + "/" + LogManager.Instance.subFolder + "/" + name;
+            }
         }
         #endregion
 

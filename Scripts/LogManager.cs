@@ -25,7 +25,7 @@ namespace FastFileLog {
     public class LogManager : MonoBehaviour {
 
         [Tooltip("The save path of log files, relative to the Asset path or application root path")]
-        public string savePath;
+        public string subFolder = "";
 
         [Header("Readonly")]
         [Tooltip("The list of all enabled loggers")]
@@ -67,9 +67,6 @@ namespace FastFileLog {
         }
 
         #endregion
-
-        
-
 
         #region Helpers
 
@@ -120,16 +117,12 @@ namespace FastFileLog {
 
         #endregion
 
-        
-
-
         #region Unity Life Cycle
         public static LogManager Instance;
         void Awake() {
             if (Instance == null)
                 Instance = this;
         }
-
         
         void OnDestroy() {
             SaveAllLog();
